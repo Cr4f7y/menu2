@@ -23,7 +23,9 @@
       font-family: Arial, sans-serif;
 
       background:
-        radial-gradient(circle at top, #1b1b1b 0%, #050505 70%);
+        radial-gradient(circle at top,
+          #1b1b1b 0%,
+          #050505 70%);
 
       color: white;
 
@@ -38,12 +40,8 @@
 
       background:
         radial-gradient(circle at 20% 20%,
-          rgba(212,175,55,0.08),
-          transparent 40%),
-
-        radial-gradient(circle at 80% 0%,
-          rgba(255,255,255,0.04),
-          transparent 30%);
+          rgba(212,175,55,0.04),
+          transparent 40%);
 
       z-index: -1;
     }
@@ -91,10 +89,8 @@
 
       padding: 14px 20px;
 
-      backdrop-filter: blur(12px);
-
       background:
-        rgba(0,0,0,0.45);
+        rgba(10,10,10,0.96);
 
       border-bottom:
         1px solid rgba(255,255,255,0.05);
@@ -179,7 +175,7 @@
       min-height: 120px;
 
       background:
-        rgba(255,255,255,0.055);
+        rgba(24,24,24,0.96);
 
       border:
         1px solid rgba(255,255,255,0.08);
@@ -188,8 +184,6 @@
 
       padding: 16px;
 
-      backdrop-filter: blur(6px);
-
       transition: 0.2s ease;
     }
 
@@ -197,7 +191,7 @@
       transform: translateY(-2px);
 
       background:
-        rgba(255,255,255,0.07);
+        rgba(32,32,32,0.98);
     }
 
     .menu-left {
@@ -346,81 +340,90 @@
 
     async function loadMenu() {
 
-      const response = await fetch(SHEET_URL);
+      try {
 
-      const data = await response.json();
+        const response = await fetch(SHEET_URL);
 
-      document.getElementById('loading').style.display = 'none';
+        const data = await response.json();
 
-      const grouped = {};
+        document.getElementById('loading').style.display = 'none';
 
-      data.forEach(item => {
+        const grouped = {};
 
-        if (!grouped[item.category]) {
-          grouped[item.category] = [];
-        }
+        data.forEach(item => {
 
-        grouped[item.category].push(item);
+          if (!grouped[item.category]) {
+            grouped[item.category] = [];
+          }
 
-      });
-
-      const menu = document.getElementById('menu');
-
-      Object.keys(grouped).forEach(category => {
-
-        const section = document.createElement('section');
-
-        section.className = 'category';
-
-        section.id = category;
-
-        let html = `
-          <div class="category-title">
-            ${category}
-          </div>
-
-          <div class="menu-grid">
-        `;
-
-        grouped[category].forEach(item => {
-
-          html += `
-            <div class="menu-item">
-
-              <div class="menu-left">
-
-                <h3 class="menu-name">
-                  ${item.name}
-                </h3>
-
-                <p class="menu-description">
-                  ${item.description}
-                </p>
-
-                <div class="menu-meta">
-                  ${item.weight}
-                </div>
-
-              </div>
-
-              <div class="menu-price">
-                ${item.price}
-              </div>
-
-            </div>
-          `;
+          grouped[item.category].push(item);
 
         });
 
-        html += `
-          </div>
-        `;
+        const menu = document.getElementById('menu');
 
-        section.innerHTML = html;
+        Object.keys(grouped).forEach(category => {
 
-        menu.appendChild(section);
+          const section = document.createElement('section');
 
-      });
+          section.className = 'category';
+
+          section.id = category;
+
+          let html = `
+            <div class="category-title">
+              ${category}
+            </div>
+
+            <div class="menu-grid">
+          `;
+
+          grouped[category].forEach(item => {
+
+            html += `
+              <div class="menu-item">
+
+                <div class="menu-left">
+
+                  <h3 class="menu-name">
+                    ${item.name}
+                  </h3>
+
+                  <p class="menu-description">
+                    ${item.description}
+                  </p>
+
+                  <div class="menu-meta">
+                    ${item.weight}
+                  </div>
+
+                </div>
+
+                <div class="menu-price">
+                  ${item.price}
+                </div>
+
+              </div>
+            `;
+
+          });
+
+          html += `
+            </div>
+          `;
+
+          section.innerHTML = html;
+
+          menu.appendChild(section);
+
+        });
+
+      } catch (error) {
+
+        document.getElementById('loading').innerHTML =
+          'Не вдалося завантажити меню';
+
+      }
 
     }
 
