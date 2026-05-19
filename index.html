@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Царське Село — Меню</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+
+      font-family: Arial, sans-serif;
+
+      background:
+        radial-gradient(circle at top, #1b1b1b 0%, #050505 70%);
+
+      color: white;
+
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+
+      position: fixed;
+      inset: 0;
+
+      background:
+        radial-gradient(circle at 20% 20%,
+          rgba(212,175,55,0.08),
+          transparent 40%),
+
+        radial-gradient(circle at 80% 0%,
+          rgba(255,255,255,0.04),
+          transparent 30%);
+
+      z-index: -1;
+    }
+
+    header {
+      text-align: center;
+
+      padding:
+        18px 20px 8px;
+    }
+
+    .logo {
+      width: 90px;
+
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin: 0;
+
+      font-size: 42px;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      margin-top: 10px;
+
+      opacity: 0.65;
+
+      font-size: 13px;
+
+      letter-spacing: 2px;
+
+      text-transform: uppercase;
+    }
+
+    .top-nav {
+      position: sticky;
+      top: 0;
+
+      z-index: 100;
+
+      display: flex;
+      justify-content: center;
+
+      padding: 14px 20px;
+
+      backdrop-filter: blur(12px);
+
+      background:
+        rgba(0,0,0,0.45);
+
+      border-bottom:
+        1px solid rgba(255,255,255,0.05);
+    }
+
+    .top-nav-inner {
+      display: flex;
+      gap: 10px;
+
+      width: 100%;
+      max-width: 1280px;
+
+      overflow-x: auto;
+    }
+
+    .top-nav-inner::-webkit-scrollbar {
+      display: none;
+    }
+
+    .top-nav a {
+      color: white;
+
+      text-decoration: none;
+
+      padding: 8px 14px;
+
+      border-radius: 999px;
+
+      background:
+        rgba(255,255,255,0.06);
+
+      white-space: nowrap;
+
+      font-size: 13px;
+
+      transition: 0.2s ease;
+    }
+
+    .top-nav a:hover {
+      background:
+        rgba(255,255,255,0.12);
+    }
+
+    main {
+      max-width: 1280px;
+
+      margin: 0 auto;
+
+      padding: 24px;
+    }
+
+    .category {
+      margin-bottom: 52px;
+    }
+
+    .category-title {
+      font-size: 30px;
+      font-weight: 700;
+
+      margin-bottom: 20px;
+
+      padding-bottom: 12px;
+
+      border-bottom:
+        1px solid rgba(255,255,255,0.08);
+    }
+
+    .menu-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(auto-fit, minmax(420px, 1fr));
+
+      gap: 14px;
+    }
+
+    .menu-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+
+      min-height: 120px;
+
+      background:
+        rgba(255,255,255,0.055);
+
+      border:
+        1px solid rgba(255,255,255,0.08);
+
+      border-radius: 22px;
+
+      padding: 16px;
+
+      backdrop-filter: blur(6px);
+
+      transition: 0.2s ease;
+    }
+
+    .menu-item:hover {
+      transform: translateY(-2px);
+
+      background:
+        rgba(255,255,255,0.07);
+    }
+
+    .menu-left {
+      flex: 1;
+    }
+
+    .menu-name {
+      margin: 0 0 6px;
+
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .menu-description {
+      margin: 0;
+
+      opacity: 0.72;
+
+      line-height: 1.5;
+
+      font-size: 14px;
+    }
+
+    .menu-meta {
+      margin-top: 10px;
+
+      opacity: 0.45;
+
+      font-size: 13px;
+    }
+
+    .menu-price {
+      color: #d0b15c;
+
+      font-size: 24px;
+      font-weight: bold;
+
+      white-space: nowrap;
+    }
+
+    #loading {
+      text-align: center;
+
+      opacity: 0.6;
+
+      padding: 40px 20px;
+
+      font-size: 15px;
+    }
+
+    footer {
+      text-align: center;
+
+      padding:
+        10px 20px 40px;
+
+      opacity: 0.35;
+
+      font-size: 14px;
+    }
+
+    @media (max-width: 900px) {
+
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+    @media (max-width: 600px) {
+
+      h1 {
+        font-size: 32px;
+      }
+
+      .category-title {
+        font-size: 24px;
+      }
+
+      .menu-item {
+        padding: 14px;
+      }
+
+      .menu-name {
+        font-size: 18px;
+      }
+
+      .menu-price {
+        font-size: 18px;
+      }
+
+      main {
+        padding: 18px;
+      }
+
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <header>
+
+    <img
+      src="logo.png"
+      alt="Лого"
+      class="logo"
+    >
+
+    <h1>Меню</h1>
+
+    <div class="subtitle">
+      Смакуйте найкраще
+    </div>
+
+  </header>
+
+  <nav class="top-nav">
+
+    <div class="top-nav-inner">
+
+      <a href="#Закуски">Закуски</a>
+      <a href="#Основні">Основні</a>
+      <a href="#Напої">Напої</a>
+      <a href="#Десерти">Десерти</a>
+
+    </div>
+
+  </nav>
+
+  <div id="loading">
+    Завантаження меню...
+  </div>
+
+  <main id="menu"></main>
+
+  <footer>
+    © Царське Село
+  </footer>
+
+  <script>
+
+    const SHEET_URL =
+     'https://opensheet.elk.sh/1mRHHGfU8Q3jeqyEcJkAUAuLzsudmDa7ah6UZn2xwq-4/Sheet1';
+
+    async function loadMenu() {
+
+      const response = await fetch(SHEET_URL);
+
+      const data = await response.json();
+
+      document.getElementById('loading').style.display = 'none';
+
+      const grouped = {};
+
+      data.forEach(item => {
+
+        if (!grouped[item.category]) {
+          grouped[item.category] = [];
+        }
+
+        grouped[item.category].push(item);
+
+      });
+
+      const menu = document.getElementById('menu');
+
+      Object.keys(grouped).forEach(category => {
+
+        const section = document.createElement('section');
+
+        section.className = 'category';
+
+        section.id = category;
+
+        let html = `
+          <div class="category-title">
+            ${category}
+          </div>
+
+          <div class="menu-grid">
+        `;
+
+        grouped[category].forEach(item => {
+
+          html += `
+            <div class="menu-item">
+
+              <div class="menu-left">
+
+                <h3 class="menu-name">
+                  ${item.name}
+                </h3>
+
+                <p class="menu-description">
+                  ${item.description}
+                </p>
+
+                <div class="menu-meta">
+                  ${item.weight}
+                </div>
+
+              </div>
+
+              <div class="menu-price">
+                ${item.price}
+              </div>
+
+            </div>
+          `;
+
+        });
+
+        html += `
+          </div>
+        `;
+
+        section.innerHTML = html;
+
+        menu.appendChild(section);
+
+      });
+
+    }
+
+    loadMenu();
+
+  </script>
+
+</body>
+
+</html>
